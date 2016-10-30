@@ -14,3 +14,14 @@ os.iso: kernel.bin grub.cfg
 	cp grub.cfg isofiles/boot/grub
 	cp kernel.bin isofiles/boot/
 	~/opt/bin/grub-mkrescue -o os.iso isofiles
+
+run: os.iso
+	qemu-system-x86_64 -cdrom os.iso
+
+.PHONY: clean
+clean:
+	rm -f multiboot_header.o
+	rm -f boot.o
+	rm -f kernel.bin
+	rm -rf isofiles
+	rm -f os.iso
